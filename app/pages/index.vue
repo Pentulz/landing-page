@@ -5,6 +5,5 @@
 <template>
   <div>
     <h1>Landing page</h1>
-    <NuxtLink to="/dashboard">Dashboard</NuxtLink>
   </div>
 </template>
