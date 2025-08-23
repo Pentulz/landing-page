@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     /**
      * Prefix for all the imported component
      */
-    prefix: "CN",
+    prefix: "",
     /**
      * Directory that the component lives in.
      * @default "./components/ui"
