@@ -1,5 +1,16 @@
 <script setup>
 import { Github } from "lucide-vue-next";
+
+useHead({
+  title: "Pentulz - The security orchestrator",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Discover Pentulz, the orchestrator for all your security audits!",
+    },
+  ],
+});
 </script>
 <template>
   <div class="min-h-screen bg-background flex flex-col items-center gap-16">
@@ -112,7 +123,7 @@ import { Github } from "lucide-vue-next";
     <div class="flex flex-col max-w-[1320px] px-8 w-full gap-24 pt-16">
       <section class="flex flex-col lg:flex-row items-center gap-6 w-full">
         <div class="lg:w-2/5 flex flex-col gap-4">
-          <h2 id="deploy" class="text-4xl">Deploy</h2>
+          <h2 id="deploy" class="text-4xl font-semibold">Deploy</h2>
           <p class="text-3xl">
             Set up Pentulz across your infrastructure with simple deployment
             commands. Each agent connects automatically and reports its status
@@ -137,7 +148,7 @@ import { Github } from "lucide-vue-next";
         class="flex flex-col lg:flex-row-reverse items-center gap-6 w-full"
       >
         <div class="lg:w-2/5 flex flex-col gap-4">
-          <h2 id="execute" class="text-4xl">Execute</h2>
+          <h2 id="execute" class="text-4xl font-semibold">Execute</h2>
           <p class="text-3xl">
             Launch multiple pentest tools simultaneously across all connected
             agents.
@@ -159,7 +170,7 @@ import { Github } from "lucide-vue-next";
 
       <section class="flex flex-col lg:flex-row items-center gap-6 w-full">
         <div class="lg:w-2/5 flex flex-col gap-4">
-          <h2 id="analyze" class="text-4xl">Analyze</h2>
+          <h2 id="analyze" class="text-4xl font-semibold">Analyze</h2>
           <p class="text-3xl">
             All tool outputs are automatically parsed into a consistent JSON
             format. Filter findings, track progress, and export reports from a
