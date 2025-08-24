@@ -6,6 +6,12 @@ import { useHead } from "#imports";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
   Github,
   Shield,
   Target,
@@ -13,6 +19,7 @@ import {
   ArrowRight,
   Clock,
   Database,
+  Menu,
 } from "lucide-vue-next";
 
 // Setup motion for elements
@@ -231,7 +238,7 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen bg-background">
+  <div class="min-h-screen bg-background overflow-x-hidden">
     <!-- Header -->
     <header
       class="fixed top-0 z-50 w-full transition-all duration-300 ease-out gpu-accelerated"
@@ -241,38 +248,34 @@ useHead({
       }"
     >
       <div
-        class="mx-auto transition-all duration-500 ease-in-out"
-        :class="{
-          'max-w-2xl px-6': isScrolled,
-          'max-w-7xl px-4 sm:px-6 lg:px-8': !isScrolled,
-        }"
+        class="container mx-auto px-4 sm:px-6 transition-all duration-300 ease-in-out"
       >
         <div
-          class="transition-all duration-500 ease-in-out flex items-center justify-between"
+          class="transition-all duration-300 ease-in-out flex items-center justify-between bg-card/80 backdrop-blur-lg border border-border/30 rounded-xl shadow-md mx-auto"
           :class="{
-            'bg-card/95 backdrop-blur-lg border border-border/50 rounded-2xl px-6 py-3 shadow-lg':
+            'px-4 py-3 shadow-lg rounded-2xl bg-card/95 border-border/50 max-w-xl md:max-w-2xl':
               isScrolled,
-            'bg-card/50 backdrop-blur-sm border-b border-border px-0 py-4':
+            'px-4 py-4 shadow-md rounded-xl bg-card/80 border-border/30 max-w-4xl':
               !isScrolled,
           }"
         >
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-2 sm:space-x-3">
             <img
               src="/logo.png"
               alt="Pentulz Logo"
               class="object-contain transition-all duration-300"
               :class="{
-                'h-6 w-6': isScrolled,
-                'h-8 w-8': !isScrolled,
+                'h-7 w-7 sm:h-8 sm:w-8': isScrolled,
+                'h-9 w-9 sm:h-10 sm:w-10': !isScrolled,
               }"
-              width="32"
-              height="32"
+              width="40"
+              height="40"
             />
             <span
               class="font-bold text-foreground transition-all duration-300"
               :class="{
-                'text-lg': isScrolled,
-                'text-xl': !isScrolled,
+                'text-lg sm:text-xl': isScrolled,
+                'text-xl sm:text-2xl': !isScrolled,
               }"
               >Pentulz</span
             >
@@ -286,7 +289,7 @@ useHead({
             }"
           >
             <button
-              class="text-sm font-medium transition-colors relative"
+              class="text-base font-medium transition-colors relative"
               :class="
                 currentSection === 'benefits'
                   ? 'text-primary'
@@ -302,7 +305,7 @@ useHead({
               />
             </button>
             <button
-              class="text-sm font-medium transition-colors relative"
+              class="text-base font-medium transition-colors relative"
               :class="
                 currentSection === 'how-it-works'
                   ? 'text-primary'
@@ -319,10 +322,66 @@ useHead({
             </button>
           </nav>
 
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-1 sm:space-x-2">
+            <!-- Mobile dropdown menu (only when not scrolled) -->
+            <div v-if="!isScrolled" class="flex sm:hidden relative">
+              <DropdownMenu>
+                <DropdownMenuTrigger as-child>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    class="px-3 py-2 hover:bg-muted/50"
+                  >
+                    <Menu class="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  side="bottom"
+                  class="w-56 bg-card/95 backdrop-blur-lg border border-border/50 rounded-xl shadow-lg mt-2"
+                >
+                  <div class="p-2">
+                    <DropdownMenuItem
+                      class="cursor-pointer rounded-lg px-4 py-3 text-base font-medium hover:bg-primary/10 focus:bg-primary/10"
+                      @click="scrollToSection('benefits')"
+                    >
+                      Features
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      class="cursor-pointer rounded-lg px-4 py-3 text-base font-medium hover:bg-primary/10 focus:bg-primary/10"
+                      @click="scrollToSection('how-it-works')"
+                    >
+                      How It Works
+                    </DropdownMenuItem>
+                    <div class="border-t border-border/30 my-2" />
+                    <DropdownMenuItem as-child>
+                      <a
+                        href="https://github.com/Pentulz/pentulz"
+                        class="flex items-center space-x-3 cursor-pointer rounded-lg px-4 py-3 text-base font-medium hover:bg-muted/50 focus:bg-muted/50"
+                        rel="noopener noreferrer"
+                      >
+                        <Github class="h-5 w-5" />
+                        <span>GitHub</span>
+                      </a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem as-child>
+                      <a
+                        href="https://github.com/Pentulz/Pentulz/blob/main/README.md"
+                        class="flex items-center space-x-3 cursor-pointer rounded-lg px-4 py-3 text-base font-medium bg-primary/10 hover:bg-primary/20 focus:bg-primary/20 text-primary"
+                      >
+                        <ArrowRight class="h-5 w-5" />
+                        <span>Get Started</span>
+                      </a>
+                    </DropdownMenuItem>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+            <!-- Desktop and scrolled state buttons -->
             <Button
               variant="ghost"
-              :size="isScrolled ? 'sm' : 'sm'"
+              :size="isScrolled ? 'default' : 'default'"
               class="hidden sm:flex items-center space-x-2"
               as-child
             >
@@ -332,19 +391,24 @@ useHead({
                 rel="noopener noreferrer"
               >
                 <Github
-                  :class="isScrolled ? 'h-3 w-3' : 'h-4 w-4'"
+                  :class="isScrolled ? 'h-4 w-4' : 'h-5 w-5'"
                   aria-hidden="true"
                 />
-                <span :class="isScrolled ? 'text-xs' : 'text-sm'">GitHub</span>
+                <span :class="isScrolled ? 'text-sm' : 'text-base'"
+                  >GitHub</span
+                >
               </a>
             </Button>
             <Button
-              :size="isScrolled ? 'sm' : 'sm'"
+              :size="isScrolled ? 'default' : 'default'"
               class="bg-primary hover:bg-primary/90 transition-all duration-300"
-              :class="{
-                'px-3 py-1 text-xs': isScrolled,
-                'px-4 py-2 text-sm': !isScrolled,
-              }"
+              :class="[
+                {
+                  'px-3 sm:px-4 py-2 text-sm': isScrolled,
+                  'px-4 sm:px-5 py-2 text-sm sm:text-base': !isScrolled,
+                },
+                !isScrolled ? 'hidden sm:flex' : 'flex',
+              ]"
               as-child
             >
               <a href="https://github.com/Pentulz/Pentulz/blob/main/README.md">
@@ -435,7 +499,7 @@ useHead({
             </Button>
           </div>
 
-          <div ref="heroImage" class="relative">
+          <div ref="heroImage" class="relative px-4 sm:px-8">
             <div class="perspective-1000">
               <picture class="block transform-gpu">
                 <source
@@ -460,13 +524,13 @@ useHead({
               </picture>
             </div>
             <div
-              class="absolute -inset-8 bg-gradient-to-r from-primary/20 via-blue-500/10 to-purple-500/20 rounded-2xl blur-2xl -z-10 animate-pulse"
+              class="absolute left-4 right-4 top-4 bottom-4 sm:left-0 sm:right-0 sm:top-0 sm:bottom-0 sm:-inset-8 bg-gradient-to-r from-primary/20 via-blue-500/10 to-purple-500/20 rounded-2xl blur-2xl -z-10 animate-pulse"
             />
             <div
-              class="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl -z-10"
+              class="absolute bottom-2 left-6 sm:-bottom-10 sm:-left-10 w-24 h-24 sm:w-32 sm:h-32 bg-primary/10 rounded-full blur-2xl -z-10"
             />
             <div
-              class="absolute -top-10 -right-10 w-24 h-24 bg-blue-500/10 rounded-full blur-xl -z-10"
+              class="absolute top-2 right-6 sm:-top-10 sm:-right-10 w-20 h-20 sm:w-24 sm:h-24 bg-blue-500/10 rounded-full blur-xl -z-10"
             />
           </div>
         </div>
@@ -691,7 +755,7 @@ useHead({
                   />
                 </picture>
                 <div
-                  class="absolute -inset-6 bg-gradient-to-br from-primary/10 to-blue-500/5 rounded-2xl blur-xl -z-10 group-hover:blur-2xl transition-all duration-700"
+                  class="absolute -inset-3 sm:-inset-6 bg-gradient-to-br from-primary/10 to-blue-500/5 rounded-2xl blur-xl -z-10 group-hover:blur-2xl transition-all duration-700"
                 />
               </div>
             </div>
@@ -722,7 +786,7 @@ useHead({
                   />
                 </picture>
                 <div
-                  class="absolute -inset-6 bg-gradient-to-br from-green-500/10 to-primary/5 rounded-2xl blur-xl -z-10 group-hover:blur-2xl transition-all duration-700"
+                  class="absolute -inset-3 sm:-inset-6 bg-gradient-to-br from-green-500/10 to-primary/5 rounded-2xl blur-xl -z-10 group-hover:blur-2xl transition-all duration-700"
                 />
               </div>
             </div>
@@ -810,7 +874,7 @@ useHead({
                   />
                 </picture>
                 <div
-                  class="absolute -inset-6 bg-gradient-to-br from-blue-500/10 to-purple-500/5 rounded-2xl blur-xl -z-10 group-hover:blur-2xl transition-all duration-700"
+                  class="absolute -inset-3 sm:-inset-6 bg-gradient-to-br from-blue-500/10 to-purple-500/5 rounded-2xl blur-xl -z-10 group-hover:blur-2xl transition-all duration-700"
                 />
               </div>
             </div>
@@ -824,12 +888,12 @@ useHead({
       class="py-24 bg-gradient-to-br from-primary via-blue-600 to-purple-700 text-white relative overflow-hidden"
     >
       <div class="absolute inset-0 bg-grid-white/10 bg-grid-16" />
-      <div class="absolute inset-0">
+      <div class="absolute inset-0 overflow-hidden">
         <div
-          class="absolute top-0 -left-4 w-72 h-72 bg-white/5 rounded-full blur-3xl"
+          class="absolute top-0 -left-2 sm:-left-4 w-48 h-48 sm:w-72 sm:h-72 bg-white/5 rounded-full blur-3xl"
         />
         <div
-          class="absolute bottom-0 -right-4 w-96 h-96 bg-white/5 rounded-full blur-3xl"
+          class="absolute bottom-0 -right-2 sm:-right-4 w-64 h-64 sm:w-96 sm:h-96 bg-white/5 rounded-full blur-3xl"
         />
       </div>
       <div
